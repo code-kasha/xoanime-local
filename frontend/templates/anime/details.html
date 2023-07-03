@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if request.session.anime_details %}
+{{request.session.anime_details.title}}
+{% else %}
+Anime Details
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+
+<div class="">
+    {% if request.session.anime_episodes %}
+    <p><a href="{% url 'watch' %}">Watch Anime</a></p>
+    {% endif %}
+</div>
+
+{% endblock content %}

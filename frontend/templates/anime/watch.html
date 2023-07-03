@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{% if request.session.anime_details and request.session.anime_episode %}
+Watch -
+{{request.session.anime_details.title}}
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+<p>Episode - {{request.session.anime_episode.number}}</p>
+<br>
+
+<div class="video-container">
+    <video id="video-player" controls></video>
+    <div class="quality-selector-container">
+        <label for="quality-selector">Quality:</label>
+        <select id="quality-selector"></select>
+    </div>
+</div>
+
+
+{% if request.session.anime_episodes %}
+{% for episode in request.session.anime_episodes %}
+<a href="{% url 'play' %}?id={{episode.id}}">{{episode.number}}</a>
+{% endfor %}
+{% endif %}
+<br>
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var video = document.getElementById('video-player')
+        var qualitySelector = document.getElementById('quality-selector')
+
+        var sources = JSON.parse('{{ request.session.episode_links | safe }}').sources
+
+        for (var i = 0; i < sources.length; i++) {
+            var source = sources[i]
+            var option = document.createElement('option')
+            option.value = source.url
+            option.text = source.quality
+            qualitySelector.appendChild(option)
+        }
+
+        function loadAndPlaySelectedVideo() {
+            var selectedSourceUrl = qualitySelector.value
+            var selectedSource = sources.find(function (source) {
+                return source.url === selectedSourceUrl
+            })
+
+            if (selectedSource) {
+                if (Hls.isSupported()) {
+                    var hls = new Hls()
+                    hls.loadSource(selectedSource.url)
+                    hls.attachMedia(video)
+                    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                        video.play()
+                    })
+                } else {
+                    video.src = selectedSource.url
+                    video.play()
+                }
+            }
+        }
+
+        qualitySelector.addEventListener('change', loadAndPlaySelectedVideo)
+
+        loadAndPlaySelectedVideo()
+
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode >= 49 && event.keyCode <= 57) {
+                var seekTime = ((event.keyCode - 48) * video.duration) / 10
+                video.currentTime = seekTime
+            }
+        })
+    })
+</script>
+{% endblock scripts %}

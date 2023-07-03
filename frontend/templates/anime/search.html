@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Search Results
+{% if request.session.anime_search_query %}
+- {{request.session.anime_search_query}}
+{% endif %}
+
+{% endblock title %}
+
+{% block content %}
+
+
+{% if request.session.anime_search_results %}
+
+{% if request.session.anime_search_results.hasNextPage %}
+<a href="{% url 'search' %}?page={{request.session.anime_search_results.currentPage|add:1}}">Next</a>
+{% endif %}
+
+<p>Page Number : {{request.session.anime_search_results.currentPage}}</p>
+
+{% if request.session.anime_search_results.currentPage|add:"0"  > 1 %}
+<a href="{% url 'search' %}?page={{request.session.anime_search_results.currentPage|add:-1}}">Previous</a>
+{% endif %}
+
+{% if request.session.anime_search_query %}
+<p>You searched for {{request.session.anime_search_query|capfirst}}</p>
+{% endif %}
+
+
+{% for result in request.session.anime_search_results.results %}
+
+<p><a href="{% url 'details' %}?id={{result.id}}">{{forloop.counter}}</a>&nbsp;{{result.title|safe}}</p>
+{% endfor %}
+
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Top Airing
+
+{% endblock title %}
+
+{% block content %}
+
+
+{% if request.session.top_airing %}
+
+{% if request.session.top_airing.hasNextPage %}
+<a href="{% url 'top' %}?page={{request.session.top_airing.currentPage|add:1}}">Next</a>
+{% endif %}
+
+<p>Page Number : {{request.session.top_airing.currentPage}}</p>
+
+{% if request.session.top_airing.currentPage|add:"0"  > 1 %}
+<a href="{% url 'top' %}?page={{request.session.top_airing.currentPage|add:-1}}">Previous</a>
+{% endif %}
+
+{% for result in request.session.top_airing.results %}
+<p><a href="{% url 'details' %}?id={{result.id}}">{{forloop.counter}}</a>&nbsp;{{result.title|safe}}</p>
+{% endfor %}
+
+{% endif %}
+
+{% endblock content %}

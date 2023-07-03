@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Recent Episodes
+
+{% endblock title %}
+
+{% block content %}
+
+
+{% if request.session.recent_episodes %}
+
+{% if request.session.recent_episodes.hasNextPage %}
+<a href="{% url 'recent' %}?page={{request.session.recent_episodes.currentPage|add:1}}">Next</a>
+{% endif %}
+
+<p>Page Number : {{request.session.recent_episodes.currentPage}}</p>
+
+{% if request.session.recent_episodes.currentPage|add:"0"  > 1 %}
+<a href="{% url 'recent' %}?page={{request.session.recent_episodes.currentPage|add:-1}}">Previous</a>
+{% endif %}
+
+{% for result in request.session.recent_episodes.results %}
+<p><a href="{% url 'watch_episode' %}?id={{result.id}}">{{forloop.counter}}</a>&nbsp;{{result.title|safe}} &nbsp;- Episode {{result.episodeNumber|safe}}</p>
+{% endfor %}
+
+{% endif %}
+
+{% endblock content %}

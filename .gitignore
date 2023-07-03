@@ -1,0 +1,6 @@
+api
+start.sh
+.venv
+__pycache__
+*.pyc
+*.sqlite3
