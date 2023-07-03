@@ -22,7 +22,7 @@ cd anime
 
 ### If you use poetry
 
-1. Navigate to the `frontend` directory.
+1. Navigate to the `frontend` directory. frontend/frontend
 
 cd frontend
 
@@ -40,7 +40,7 @@ python manage.py runserver
 
 ### Using venv / virtualenv
 
-1. Navigate to the `frontend` directory.
+1. Navigate to the `frontend` directory. "frontend/frontend"
 
 cd frontend
 
