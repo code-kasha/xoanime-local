@@ -6,6 +6,11 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
+def clear(request):
+    request.session.clear()
+    return redirect("/")
+
+
 def index(request):
     context = {}
     return render(request, "index.html", context)
@@ -28,7 +33,8 @@ def search_anime(request):
 
 def paginate_search(request, page):
     query = request.session.get("anime_search_query")
-    page = int(page)
+    print(request)
+    page = page
     request.session["anime_search_results"] = requests.get(
         f"http://localhost:3000/anime/gogoanime/{query}?page={page}"
     ).json()
