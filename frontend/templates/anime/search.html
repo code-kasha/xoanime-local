@@ -15,13 +15,13 @@ Search Results
 {% if request.session.anime_search_results %}
 
 {% if request.session.anime_search_results.hasNextPage %}
-<a href="{% url 'search' %}?page={{request.session.anime_search_results.currentPage|add:1}}">Next</a>
+<a href="{% url 'paginate' request.session.anime_search_results.currentPage|add:1 %}?query={{request.session.anime_search_query}}">Next</a>
 {% endif %}
 
 <p>Page Number : {{request.session.anime_search_results.currentPage}}</p>
 
-{% if request.session.anime_search_results.currentPage|add:"0"  > 1 %}
-<a href="{% url 'search' %}?page={{request.session.anime_search_results.currentPage|add:-1}}">Previous</a>
+{% if request.session.anime_search_results.currentPage|add:0  > 1 %}
+<a href="{% url 'paginate' request.session.anime_search_results.currentPage|add:-1 %}?query={{request.session.anime_search_query}}">Previous</a>
 {% endif %}
 
 {% if request.session.anime_search_query %}
