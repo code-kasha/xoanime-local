@@ -18,7 +18,7 @@ cd anime
 
 4. Clone the frontend repository.
 
-   - git clone https://github.com/code-kasha/anime.git .
+   - git clone https://github.com/code-kasha/anime.git frontend
 
 ### If you use poetry
 
