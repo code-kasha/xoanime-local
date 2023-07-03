@@ -27,8 +27,8 @@ cd anime
 cd frontend
 
 2. Install dependencies using Poetry.
--poetry shell
--poetry install
+- poetry shell
+- poetry install
 
 3. Apply database migrations.
 
