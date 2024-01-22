@@ -1,3 +1,5 @@
+# I have not updated this repository and have no plans to do so. This is going to be archived 
+
 # XO Anime - Local
 
 This package allows you to watch your favorite anime locally without the need for deployment, ads, or login.
